@@ -1,21 +1,63 @@
 #include "ofApp.h"
+#include <algorithm>
 
-struct Node
+class Node
 {
-    int value;
+public:
+    int data;
     float x;
     float y;
     float size;
     float oscillation;
+    Node* next;
+
+    Node(int value) 
+    {
+        data = value;
+        size = value;
+        next = nullptr;
+    }
+
 };
 
-std::list<Node> linkedList;
+class LinkedList
+{
+public:
+    Node* head;
+
+    LinkedList()
+    {
+        head = nullptr;
+    }
+
+    void insert(int value) 
+    {
+        Node* newNode = new Node(value);
+        
+        if (!head) 
+        {
+            head = newNode;
+            return;
+        }
+
+        Node* temp = head;
+        while (temp->next) 
+        {
+            temp = temp->next;
+        }
+        temp->next = newNode;
+    }
+};
+
+LinkedList linkedList;
+float amplitude = 10.0f;
 
     //--------------------------------------------------------------
     void ofApp::setup() 
     {
         ofSetFrameRate(60);
         ofSetBackgroundColor(30);
+        linkedList.insert(ofRandom(10, 100));
     }
 
     //--------------------------------------------------------------
@@ -29,25 +71,31 @@ std::list<Node> linkedList;
         ofPushMatrix();
 
         float dernierX = 50;
-        for (auto& node : linkedList)
+        
+        Node* current = linkedList.head;
+        
+        while (current) 
         {
-            node.x = dernierX;
-            node.y = node.oscillation;
-            node.size = node.value;
+            current->x = dernierX;
+            current->y = current->oscillation;
 
-            if (&node != &linkedList.front())
+            if (current->next) 
             {
-                ofDrawLine(dernierX - node.size / 2, node.y, node.x + node.size / 2, node.y);
+                ofDrawLine(current->x + current->size / 2, current->y, dernierX + current->size + 20, current->y);
             }
 
-            ofSetColor(255, 100 + (node.value % 155), 150 + (node.value % 105));
-            ofDrawRectangle(node.x - node.size / 2, node.y - node.size / 2, node.size, node.size);
+
+            ofSetColor(255, 100 + (current->data % 155), 150 + (current->data % 105));
+            ofDrawRectangle(current->x - current->size / 2, current->y - current->size / 2, current->size, current->size);
 
             ofSetColor(255);
-            ofDrawBitmapString(ofToString(node.value), node.x - 5, node.y + 5);
+            ofDrawBitmapString(ofToString(current->data), current->x - 5, current->y + 5);
 
-            dernierX = node.x + node.size + 20;
+            dernierX = current->x + current->size + 20;
+            current = current->next;
         }
+
+        ofPopMatrix();
 
     }
 
