@@ -1,71 +1,107 @@
 #include "ofApp.h"
 
-//--------------------------------------------------------------
-void ofApp::setup(){
+struct Node
+{
+    int value;
+    float x;
+    float y;
+    float size;
+    float oscillation;
+};
 
-}
+std::list<Node> linkedList;
 
-//--------------------------------------------------------------
-void ofApp::update(){
+    //--------------------------------------------------------------
+    void ofApp::setup() 
+    {
+        ofSetFrameRate(60);
+        ofSetBackgroundColor(30);
+    }
 
-}
+    //--------------------------------------------------------------
+    void ofApp::update() {
 
-//--------------------------------------------------------------
-void ofApp::draw(){
+    }
 
-}
+    //--------------------------------------------------------------
+    void ofApp::draw()
+    {
+        ofPushMatrix();
 
-//--------------------------------------------------------------
-void ofApp::keyPressed(int key){
+        float dernierX = 50;
+        for (auto& node : linkedList)
+        {
+            node.x = dernierX;
+            node.y = node.oscillation;
+            node.size = node.value;
 
-}
+            if (&node != &linkedList.front())
+            {
+                ofDrawLine(dernierX - node.size / 2, node.y, node.x + node.size / 2, node.y);
+            }
 
-//--------------------------------------------------------------
-void ofApp::keyReleased(int key){
+            ofSetColor(255, 100 + (node.value % 155), 150 + (node.value % 105));
+            ofDrawRectangle(node.x - node.size / 2, node.y - node.size / 2, node.size, node.size);
 
-}
+            ofSetColor(255);
+            ofDrawBitmapString(ofToString(node.value), node.x - 5, node.y + 5);
 
-//--------------------------------------------------------------
-void ofApp::mouseMoved(int x, int y ){
+            dernierX = node.x + node.size + 20;
+        }
 
-}
+    }
 
-//--------------------------------------------------------------
-void ofApp::mouseDragged(int x, int y, int button){
+    //--------------------------------------------------------------
+    void ofApp::keyPressed(int key) {
 
-}
+    }
 
-//--------------------------------------------------------------
-void ofApp::mousePressed(int x, int y, int button){
+    //--------------------------------------------------------------
+    void ofApp::keyReleased(int key) {
 
-}
+    }
 
-//--------------------------------------------------------------
-void ofApp::mouseReleased(int x, int y, int button){
+    //--------------------------------------------------------------
+    void ofApp::mouseMoved(int x, int y) {
 
-}
+    }
 
-//--------------------------------------------------------------
-void ofApp::mouseEntered(int x, int y){
+    //--------------------------------------------------------------
+    void ofApp::mouseDragged(int x, int y, int button) {
 
-}
+    }
 
-//--------------------------------------------------------------
-void ofApp::mouseExited(int x, int y){
+    //--------------------------------------------------------------
+    void ofApp::mousePressed(int x, int y, int button) {
 
-}
+    }
 
-//--------------------------------------------------------------
-void ofApp::windowResized(int w, int h){
+    //--------------------------------------------------------------
+    void ofApp::mouseReleased(int x, int y, int button) {
 
-}
+    }
 
-//--------------------------------------------------------------
-void ofApp::gotMessage(ofMessage msg){
+    //--------------------------------------------------------------
+    void ofApp::mouseEntered(int x, int y) {
 
-}
+    }
 
-//--------------------------------------------------------------
-void ofApp::dragEvent(ofDragInfo dragInfo){ 
+    //--------------------------------------------------------------
+    void ofApp::mouseExited(int x, int y) {
 
-}
+    }
+
+    //--------------------------------------------------------------
+    void ofApp::windowResized(int w, int h) {
+
+    }
+
+    //--------------------------------------------------------------
+    void ofApp::gotMessage(ofMessage msg) {
+
+    }
+
+    //--------------------------------------------------------------
+    void ofApp::dragEvent(ofDragInfo dragInfo) {
+
+    }
