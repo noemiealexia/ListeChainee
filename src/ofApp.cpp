@@ -23,16 +23,23 @@ public:
 class LinkedList
 {
 public:
-    Node* head;
+    Node * head;
 
     LinkedList()
     {
         head = nullptr;
     }
 
-    void insert(int value) 
+    void insertDebut(int value) 
     {
-        Node* newNode = new Node(value);
+        Node * newNode = new Node(value);
+        newNode->next = head;
+        head = newNode;
+    }
+
+    void insertFin(int value) 
+    {
+        Node * newNode = new Node(value);
         
         if (!head) 
         {
@@ -40,13 +47,47 @@ public:
             return;
         }
 
-        Node* temp = head;
+        Node * temp = head;
         while (temp->next) 
         {
             temp = temp->next;
         }
         temp->next = newNode;
     }
+
+    void supprimeDebut() 
+    {
+        if (head) 
+        {
+            Node * temp = head;
+            head = head->next;
+            delete temp;
+        }
+    }
+
+    void supprimeFin() 
+    {
+        if (!head)
+        {
+            return;
+        }
+
+        if (!head->next) 
+        {
+            delete head;
+            head = nullptr;
+            return;
+        }
+        
+        Node * temp = head;
+        while (temp->next->next) 
+        {
+            temp = temp->next;
+        }
+        delete temp->next;
+        temp->next = nullptr;
+    }
+
 };
 
 LinkedList linkedList;
@@ -57,12 +98,19 @@ float amplitude = 10.0f;
     {
         ofSetFrameRate(60);
         ofSetBackgroundColor(30);
-        linkedList.insert(ofRandom(10, 100));
+        linkedList.insertFin(ofRandom(10, 100));
     }
 
     //--------------------------------------------------------------
-    void ofApp::update() {
-
+    void ofApp::update() 
+    {
+        float time = ofGetElapsedTimef();
+        Node* current = linkedList.head;
+        while (current) 
+        {
+            current->oscillation = sin(time + current->x * 0.05f) * amplitude;
+            current = current->next;
+        }
     }
 
     //--------------------------------------------------------------
