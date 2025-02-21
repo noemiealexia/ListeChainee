@@ -158,6 +158,9 @@ const float spacing = 100.0f;
         if (key == 'a') linkedList.supprimeDebut();
         if (key == 's') linkedList.supprimeFin();
 
+        if (key == 'z') amplitude += 2;
+        if (key == 'x') amplitude = std::max(2.0f, amplitude - 2);
+
         if (key == OF_KEY_LEFT) scrollX += 20;
         if (key == OF_KEY_RIGHT) scrollX -= 20;
 
