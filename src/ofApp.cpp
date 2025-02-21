@@ -88,6 +88,36 @@ public:
         temp->next = nullptr;
     }
 
+    void sortList() 
+    {
+        bool swapped;
+
+        if (!head || !head->next)
+        {
+            return;
+        }
+        
+        do 
+        {
+            swapped = false;
+            Node ** dernierPtr = &head;
+            Node * current = head;
+            while (current && current->next) 
+            {
+                if (current->data > current->next->data) 
+                {
+                    Node * temp = current->next;
+                    current->next = temp->next;
+                    temp->next = current;
+                    *dernierPtr = temp;
+                    swapped = true;
+                }
+                dernierPtr = &current->next;
+                current = current->next;
+            }
+        } while (swapped);
+    }
+
 };
 
 LinkedList linkedList;
@@ -123,7 +153,7 @@ const float spacing = 100.0f;
 
         float dernierX = 50;
         
-        Node* current = linkedList.head;
+        Node * current = linkedList.head;
         
         while (current) 
         {
@@ -163,6 +193,8 @@ const float spacing = 100.0f;
 
         if (key == OF_KEY_LEFT) scrollX += 20;
         if (key == OF_KEY_RIGHT) scrollX -= 20;
+
+        if (key == 'e') linkedList.sortList();
 
     }
 
