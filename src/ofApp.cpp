@@ -92,12 +92,14 @@ public:
 
 LinkedList linkedList;
 float amplitude = 10.0f;
+float scrollX = 0.0f;
+const float spacing = 100.0f;
 
     //--------------------------------------------------------------
     void ofApp::setup() 
     {
-        ofSetFrameRate(60);
-        ofSetBackgroundColor(30);
+        ofSetFrameRate(30);
+        ofSetBackgroundColor(10);
         linkedList.insertFin(ofRandom(10, 100));
     }
 
@@ -117,6 +119,7 @@ float amplitude = 10.0f;
     void ofApp::draw()
     {
         ofPushMatrix();
+        ofTranslate(scrollX, ofGetHeight() / 2 + 10);
 
         float dernierX = 50;
         
@@ -129,7 +132,7 @@ float amplitude = 10.0f;
 
             if (current->next) 
             {
-                ofDrawLine(current->x + current->size / 2, current->y, dernierX + current->size + 20, current->y);
+                ofDrawLine(current->x + current->size / 2, current->y, current->x + spacing + current->next->size / 2, current->next->y);
             }
 
 
@@ -139,7 +142,7 @@ float amplitude = 10.0f;
             ofSetColor(255);
             ofDrawBitmapString(ofToString(current->data), current->x - 5, current->y + 5);
 
-            dernierX = current->x + current->size + 20;
+            dernierX += spacing;
             current = current->next;
         }
 
@@ -148,7 +151,15 @@ float amplitude = 10.0f;
     }
 
     //--------------------------------------------------------------
-    void ofApp::keyPressed(int key) {
+    void ofApp::keyPressed(int key) 
+    {
+        if (key == 'q') linkedList.insertDebut(ofRandom(10, 100));
+        if (key == 'w') linkedList.insertFin(ofRandom(10, 100));
+        if (key == 'a') linkedList.supprimeDebut();
+        if (key == 's') linkedList.supprimeFin();
+
+        if (key == OF_KEY_LEFT) scrollX += 20;
+        if (key == OF_KEY_RIGHT) scrollX -= 20;
 
     }
 
