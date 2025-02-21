@@ -30,14 +30,14 @@ public:
         head = nullptr;
     }
 
-    void insertDebut(int value) 
+    void insertAtHead(int value) 
     {
         Node * newNode = new Node(value);
         newNode->next = head;
         head = newNode;
     }
 
-    void insertFin(int value) 
+    void insertAtTail(int value) 
     {
         Node * newNode = new Node(value);
         
@@ -55,7 +55,7 @@ public:
         temp->next = newNode;
     }
 
-    void supprimeDebut() 
+    void deleteHead() 
     {
         if (head) 
         {
@@ -65,7 +65,7 @@ public:
         }
     }
 
-    void supprimeFin() 
+    void deleteTail() 
     {
         if (!head)
         {
@@ -100,7 +100,7 @@ const float spacing = 100.0f;
     {
         ofSetFrameRate(30);
         ofSetBackgroundColor(10);
-        linkedList.insertFin(ofRandom(10, 100));
+        linkedList.insertAtTail(ofRandom(10, 100));
     }
 
     //--------------------------------------------------------------
@@ -153,10 +153,10 @@ const float spacing = 100.0f;
     //--------------------------------------------------------------
     void ofApp::keyPressed(int key) 
     {
-        if (key == 'q') linkedList.insertDebut(ofRandom(10, 100));
-        if (key == 'w') linkedList.insertFin(ofRandom(10, 100));
-        if (key == 'a') linkedList.supprimeDebut();
-        if (key == 's') linkedList.supprimeFin();
+        if (key == 'q') linkedList.insertAtHead(ofRandom(10, 100));
+        if (key == 'w') linkedList.insertAtTail(ofRandom(10, 100));
+        if (key == 'a') linkedList.deleteHead();
+        if (key == 's') linkedList.deleteTail();
 
         if (key == 'z') amplitude += 2;
         if (key == 'x') amplitude = std::max(2.0f, amplitude - 2);
